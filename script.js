@@ -42,11 +42,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const skillsData = {
     programming: [
         { name: "Java", level: "Advanced", icon: "fab fa-java" },
-        { name: "C", level: "Intermediate", icon: "fa-c" },
         { name: "Python", level: "Intermediate", icon: "fab fa-python" },
         { name: "JavaScript", level: "Intermediate", icon: "fab fa-js-square" },
         { name: "C++", level: "Intermediate", icon: "fas fa-code" },
-        { name: "SQL", level: "Intermediate", icon: "fas fa-database" },
+        { name: "SQL", level: "Basic", icon: "fas fa-database" },
         // Add more languages as needed
     ],
     
@@ -54,28 +53,66 @@ const skillsData = {
         { name: "React.js", level: "Intermediate", icon: "fab fa-react" },
         { name: "Node.js", level: "Intermediate", icon: "fab fa-node-js" },
         { name: "Express.js", level: "Intermediate", icon: "fas fa-server" },
-        { name: "Bootstrap", level: "Basics", icon: "fab fa-bootstrap" },
-        { name: "Tailwind CSS", level: "Basics", icon: "fas fa-palette" },
        
+        // Add more frameworks as needed
     ],
     
     tools: [
         { name: "Git & GitHub", level: "Advanced", icon: "fab fa-git-alt" },
         { name: "VS Code", level: "Advanced", icon: "fas fa-code" },
+        { name: "Postman", level: "Intermediate", icon: "fas fa-network-wired" },
         { name: "MongoDB", level: "Intermediate", icon: "fas fa-database" },
-        { name: "MySQL", level: "Advanced", icon: "fas fa-database" },
-        { name: "Postman", level: "Beginner", icon: "fas fa-network-wired" },
-        { name: "Firebase", level: "Beginner", icon: "fas fa-fire" }
-        
+        { name: "MySQL", level: "Basis", icon: "fas fa-database" },
+      
+        // Add more tools as needed
     ]
 };
 
 // Function to render skills
-
+function renderSkills() {
+    const skillsContainer = document.querySelector('.skills-container');
+    
+    for (const [category, skills] of Object.entries(skillsData)) {
+        const categoryElement = document.querySelector(`.skills-category:nth-child(${
+            category === 'programming' ? 1 : 
+            category === 'frameworks' ? 2 : 3
+        }) .skills-grid`);
+        
+        categoryElement.innerHTML = skills.map(skill => `
+            <div class="skill-item">
+                <i class="${skill.icon} skill-icon"></i>
+                <div class="skill-name">${skill.name}</div>
+                <div class="skill-level">${skill.level}</div>
+            </div>
+        `).join('');
+    }
+}
 
 // Project data - You can edit this too
 
+
 // Function to render projects (optional - if you want dynamic loading)
+function renderProjects() {
+    const projectsGrid = document.querySelector('.projects-grid');
+    projectsGrid.innerHTML = projects.map(project => `
+        <div class="project-card">
+            <div class="project-image">
+                <img src="${project.image}" alt="${project.title}">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">${project.title}</h3>
+                <p class="project-desc">${project.desc}</p>
+                <div class="project-tech">
+                    ${project.tech.map(tech => `<span>${tech}</span>`).join('')}
+                </div>
+                <div class="project-links">
+                    <a href="${project.github}" class="project-link"><i class="fab fa-github"></i> Code</a>
+                    <a href="${project.demo}" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
